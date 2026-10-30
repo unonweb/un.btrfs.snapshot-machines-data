@@ -12,7 +12,6 @@
 # - MACHINES_DATA_BASE_DIR
 # - WAIT_SHUTDOWN_MAX_SEC
 
-
 function snapshot_machine { # ${machine}
 
 	if [[ -z ${1} ]]; then
@@ -89,6 +88,11 @@ function snapshot_machine { # ${machine}
         done
 
         if ${skip_snapshot}; then
+			# Restart the machine if it was running before we tried to snapshot
+			if [ "${was_running}" = true ]; then
+				echo "<6>Restarting machine: ${machine} after timeout/abort ..."
+				start_machine "${machine}"
+			fi
             trap - EXIT INT TERM
             return 1
         fi
