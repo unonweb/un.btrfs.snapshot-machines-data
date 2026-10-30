@@ -20,7 +20,7 @@ GREY="\e[38;5;248m"
 
 # CONFIG
 # ======
-MACHINES_DATA_DIR="/srv/data"
+MACHINES_DATA_BASE_DIR="/srv/data"
 SNAPSHOTS_BASE_DIR="/.snapshots"
 
 # IMPORTS

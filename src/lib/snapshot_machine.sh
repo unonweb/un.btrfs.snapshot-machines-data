@@ -1,7 +1,15 @@
+# NOTES
+# =====
+# Stops the machine given by ${1}
+# Creates a snapshot
+# Src: ${MACHINES_DATA_BASE_DIR}/${machine}
+# Dst: ${SNAPSHOTS_BASE_DIR}/${subvol_name:-${machine}}
+# Starts the machine again
+
 # REQUIRES
 # ========
 # - SNAPSHOTS_BASE_DIR
-# - MACHINES_DATA_DIR
+# - MACHINES_DATA_BASE_DIR
 
 
 function snapshot_machine { # ${machine}
@@ -11,13 +19,13 @@ function snapshot_machine { # ${machine}
 		return 1
 	fi
 
-	if [[ -z ${SNAPSHOTS_BASE_DIR} || ${MACHINES_DATA_DIR} ]]; then
-		echo "Error: Missing required global var: MACHINES_DATA_DIR || SNAPSHOTS_BASE_DIR"
+	if [[ -z ${SNAPSHOTS_BASE_DIR} || ${MACHINES_DATA_BASE_DIR} ]]; then
+		echo "Error: Missing required global var: MACHINES_DATA_BASE_DIR || SNAPSHOTS_BASE_DIR"
 		return 1
 	fi
 
     local machine="${1}"
-    local machine_data_path="${MACHINES_DATA_DIR}/${machine}"
+    local machine_data_path="${MACHINES_DATA_BASE_DIR}/${machine}"
 
     # Verify path exists and is a Btrfs subvolume
     if ! is_btrfs_subvolume "${machine_data_path}"; then
@@ -51,6 +59,7 @@ function snapshot_machine { # ${machine}
 
     # Stop machine if running
     local skip_snapshot=false
+
     if [ "${was_running}" = true ]; then
         echo "<6>Stopping machine: ${machine} ..."
         machinectl stop "${machine}"

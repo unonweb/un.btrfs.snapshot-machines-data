@@ -9,8 +9,8 @@ REQUIRES / EXPECTS
 ==================
 
 - systemd-nspawn containers
-- user data in `MACHINES_DATA_DIR` for each container 
-- where `${MACHINES_DATA_DIR}/<container>` must be a btrfs subvolume
+- user data in `MACHINES_DATA_BASE_DIR` for each container 
+- where `${MACHINES_DATA_BASE_DIR}/<container>` must be a btrfs subvolume
 - and `<container>` must match the name of the systemd-nspawn container
 - call this script with a systemd timer unit 
 - provide the container names whose user data that shall be snapshoted with this call
@@ -21,7 +21,7 @@ CONFIG
 
 ```sh
 # defaults:
-MACHINES_DATA_DIR="/srv/data"
+MACHINES_DATA_BASE_DIR="/srv/data"
 SNAPSHOTS_BASE_DIR="/.snapshots"
 ```
 
