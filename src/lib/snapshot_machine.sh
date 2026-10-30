@@ -19,7 +19,7 @@ function snapshot_machine { # ${machine}
 		return 1
 	fi
 
-	if [[ -z ${SNAPSHOTS_BASE_DIR} || ${MACHINES_DATA_BASE_DIR} ]]; then
+	if [[ -z ${SNAPSHOTS_BASE_DIR} || -z ${MACHINES_DATA_BASE_DIR} ]]; then
 		echo "Error: Missing required global var: MACHINES_DATA_BASE_DIR || SNAPSHOTS_BASE_DIR"
 		return 1
 	fi
