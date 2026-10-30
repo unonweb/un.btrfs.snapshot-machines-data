@@ -18,10 +18,17 @@ MAGENTA="\e[35m"
 CYAN="\e[36m"
 GREY="\e[38;5;248m"
 
-# CONFIG
-# ======
-MACHINES_DATA_BASE_DIR="/srv/data"
-SNAPSHOTS_BASE_DIR="/.snapshots"
+# CONFIG & DEFAULTS
+# =================
+PATH_CONFIG="${SCRIPT_PARENT}/config.cfg"
+PATH_DEFAULTS="${SCRIPT_DIR}/defaults.cfg"
+
+if [[ -r ${PATH_CONFIG} ]]; then
+	source "${PATH_CONFIG}"
+else
+	echo "<4>WARN: No config file found at ${PATH_CONFIG}. Using defaults ..."
+	source "${PATH_DEFAULTS}"
+fi
 
 # IMPORTS
 # =======

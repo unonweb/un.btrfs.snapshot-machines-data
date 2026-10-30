@@ -10,6 +10,7 @@
 # ========
 # - SNAPSHOTS_BASE_DIR
 # - MACHINES_DATA_BASE_DIR
+# - WAIT_SHUTDOWN_MAX_SEC
 
 
 function snapshot_machine { # ${machine}
@@ -66,7 +67,9 @@ function snapshot_machine { # ${machine}
     
         sleep 1
         local wait_count=0
-        local wait_count_max=6 # -> 6*2=12s
+		local wait_sleep=2
+		local wait_count_max_sec=${WAIT_SHUTDOWN_MAX_SEC:-12}
+        local wait_count_max=$(( wait_count_max_sec / wait_sleep )) # -> 12s / 2 -> 6 iterations with 2s wait
 
         while true; do
             if ! machinectl status "${machine}" &>/dev/null; then
