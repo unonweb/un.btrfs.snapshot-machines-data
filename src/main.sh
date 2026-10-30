@@ -52,4 +52,4 @@ function main {
     echo "<6>Done"
 }
 
-main "${@}"
+main ${@}
